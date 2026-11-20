@@ -9,7 +9,7 @@
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:14px/1.5 Inter,system-ui,Segoe UI,Arial,sans-serif}
 button,a{font:inherit}button{cursor:pointer}a{color:inherit;text-decoration:none}
 .app{min-height:100vh;display:flex}.sidebar{width:245px;flex-shrink:0;background:var(--sidebar);border-right:1px solid #1a2030;padding:22px 15px;display:flex;flex-direction:column;position:fixed;inset:0  auto 0 0;z-index:10}
-.brand{display:flex;gap:11px;align-items:center;padding:5px 9px 23px}.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(145deg,#224e9c,#111c36);display:grid;place-items:center;font-size:23px;border:1px solid #3b6ac2;box-shadow:0 0 20px #3c76ff28}.brand b{font-size:14px;letter-spacing:1px}.brand small{display:block;font-size:10px;color:#6bbaff;letter-spacing:2px;font-weight:800}
+.brand{display:flex;align-items:center;padding:5px 9px 23px}.brand-logo-img{width:64px;height:64px;object-fit:contain;display:block;filter:drop-shadow(0 0 12px #3678ff33)}.logo{width:42px;height:42px;border-radius:12px;background:linear-gradient(145deg,#224e9c,#111c36);display:grid;place-items:center;font-size:23px;border:1px solid #3b6ac2;box-shadow:0 0 20px #3c76ff28}.brand b{font-size:14px;letter-spacing:1px}.brand small{display:block;font-size:10px;color:#6bbaff;letter-spacing:2px;font-weight:800}
 .nav-label{color:#606a82;font-size:10px;letter-spacing:1.6px;font-weight:800;padding:12px 11px 8px}
 .nav button{display:flex;align-items:center;gap:12px;width:100%;padding:11px 12px;border:1px solid transparent;background:transparent;color:#9ca7bd;border-radius:10px;text-align:left;margin:3px 0;font-weight:650}
 .nav button:hover,.nav button.active{color:#f0f5ff;background:linear-gradient(90deg,#152642,#101a2d);border-color:#243b61}
@@ -98,7 +98,7 @@ footer{border-top:1px solid #1b2030;padding:22px 30px;color:#737e94;font-size:11
 <body>
 <div class="app">
 <aside class="sidebar" id="sidebar">
- <a class="brand" href="#" onclick="show('home')"><span class="logo">🎮</span><span><b>BADBOY GAMING</b><small>YOUR GAMING HUB</small></span></a>
+ <a class="brand" href="#" onclick="show('home')" aria-label="Badboy Gaming Home"><img class="brand-logo-img" src="badboy-gaming-logo.png" alt="Badboy Gaming logo"></a>
  <div class="nav-label">MENU</div>
  <nav class="nav">
   <button class="active" data-page="home" onclick="show('home')"><span class="ico">⌂</span> Home</button>
@@ -125,7 +125,7 @@ footer{border-top:1px solid #1b2030;padding:22px 30px;color:#737e94;font-size:11
   </div>
   <div class="section-title"><h2>Explore the hub</h2><a href="#" onclick="show('games')">View all →</a></div>
   <div class="cards">
-   <article class="card home-link" role="button" tabindex="0" onclick="show('games')" onkeydown="if(event.key==='Enter'){show('games')}" data-search="whiteout survival games"><div class="card-icon">❄️</div><div class="meta">GAME HUB</div><h3>Whiteout Survival</h3><p>V4, V5, V6 and EU1 game hubs, guides and gift codes.</p><span class="card-link">Open Games →</span></article>
+   <article class="card home-link" role="button" tabindex="0" onclick="openGameDetail('wos',null,true)" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGameDetail('wos',null,true)}" data-search="whiteout survival games"><div class="card-icon">❄️</div><div class="meta">GAME HUB</div><h3>Whiteout Survival</h3><p>V4, V5, V6 and EU1 game hubs, guides and gift codes.</p><span class="card-link">Open Whiteout Survival →</span></article>
    <article class="card home-link" role="button" tabindex="0" onclick="openGameDetail('kingshot')" onkeydown="if(event.key==='Enter'){openGameDetail('kingshot')}" data-search="kingshot games"><div class="card-icon">🎯</div><div class="meta">GAME HUB</div><h3>Kingshot</h3><p>Strategy, progression, events and gameplay tips.</p><span class="card-link">Open Games →</span></article>
    <article class="card home-link" role="button" tabindex="0" onclick="show('codes')" onkeydown="if(event.key==='Enter'){show('codes')}" data-search="gift codes rewards"><div class="card-icon">🎁</div><div class="meta">REWARDS</div><h3>Gift Codes</h3><p>Find the reward list and redeem instructions.</p><span class="card-link">Open Gift Codes →</span></article>
    <article class="card home-link" role="button" tabindex="0" onclick="openGameDetail('wildwater')" onkeydown="if(event.key==='Enter'){openGameDetail('wildwater')}" data-search="wild water world games ocean water"><div class="card-icon">🌊</div><div class="meta">GAME HUB</div><h3>Wild Water World</h3><p>Explore Wild Water World, game updates and its promotional code.</p><span class="card-link">Open Games →</span></article>
