@@ -94,6 +94,24 @@ footer{border-top:1px solid #1b2030;padding:22px 30px;color:#737e94;font-size:11
 @media(max-width:650px){.detail-server-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.game-detail-banner{min-height:160px;padding:16px}}
 
 .code-hub-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}.code-hub-card{cursor:pointer;transition:transform .18s,border-color .18s}.code-hub-card:hover{transform:translateY(-3px);border-color:#5d8dcb}
+
+/* EU1 launch countdown */
+.eu1-countdown{position:relative;overflow:hidden;border:1px solid #315a89;border-radius:18px;margin:0 0 20px;padding:22px;background:radial-gradient(circle at 85% 15%,#5b8dff38,transparent 42%),linear-gradient(120deg,#0c1b31,#101a2d 55%,#080d19);box-shadow:0 12px 35px #163d7620}
+.eu1-countdown:after{content:"❄";position:absolute;right:5%;top:-25px;font-size:145px;opacity:.07;pointer-events:none}
+.eu1-countdown-inner{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
+.eu1-countdown .tag{background:#16365a;border-color:#315a89;color:#93d6ff}
+.eu1-countdown h2{margin:10px 0 5px;font-size:clamp(22px,3vw,32px);line-height:1.15}
+.eu1-countdown p{margin:0;color:#b7c8e1}
+.eu1-timer{display:flex;gap:9px;margin:15px 0 4px;flex-wrap:wrap}
+.eu1-time-unit{min-width:64px;text-align:center;background:#080e1bba;border:1px solid #2a3e5c;border-radius:10px;padding:9px 12px}
+.eu1-time-unit b{display:block;font-size:24px;line-height:1.1;color:#eaf5ff;font-variant-numeric:tabular-nums}
+.eu1-time-unit span{display:block;font-size:9px;letter-spacing:1.2px;font-weight:800;color:#8ba5c6;margin-top:4px}
+.eu1-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.eu1-actions button{border:0;border-radius:9px;padding:10px 14px;font-weight:800;color:#fff;background:linear-gradient(120deg,#3988ff,#7056df)}
+.eu1-actions .secondary{background:#101b2b;border:1px solid #304866}
+.eu1-live{display:inline-flex;align-items:center;gap:8px;color:#8df2b1;font-weight:900;letter-spacing:1px}
+.eu1-live:before{content:"";width:8px;height:8px;border-radius:50%;background:#51d68a;box-shadow:0 0 12px #51d68a}
+@media(max-width:650px){.eu1-countdown{padding:17px}.eu1-time-unit{min-width:58px;padding:8px 9px}.eu1-time-unit b{font-size:21px}}
 </style>
 </head>
 <body>
@@ -120,6 +138,7 @@ footer{border-top:1px solid #1b2030;padding:22px 30px;color:#737e94;font-size:11
  <div class="content">
  <div class="welcome"><div><div class="eyebrow">GAMING HUB / OVERVIEW</div><h1 id="pageTitle">Welcome back, gamer.</h1><p id="pageDesc">Your hub for games, rewards, updates and strategies.</p></div><div class="datepill">BADBOY GAMING ✦</div></div>
  <section class="section active" id="home">
+  <div class="eu1-countdown" id="eu1LaunchCountdown" aria-live="polite"><div class="eu1-countdown-inner"><div><span class="tag">❄️ WHITEOUT SURVIVAL · EU1</span><h2 id="eu1CountdownTitle">EU1 LAUNCH IS ALMOST HERE</h2><p id="eu1CountdownSubtitle">A fresh world. A fresh start. Make your mark from day one.</p><div class="eu1-timer" id="eu1Timer" aria-label="Countdown to EU1 launch"><div class="eu1-time-unit"><b id="eu1Days">00</b><span>DAYS</span></div><div class="eu1-time-unit"><b id="eu1Hours">00</b><span>HOURS</span></div><div class="eu1-time-unit"><b id="eu1Minutes">00</b><span>MINUTES</span></div><div class="eu1-time-unit"><b id="eu1Seconds">00</b><span>SECONDS</span></div></div><div class="eu1-actions"><button type="button" onclick="openGameDetail('wos','eu1',true)">🌍 Join EU1</button><button type="button" class="secondary" onclick="openGiftCodesPage('wos-eu1')">🎁 EU1 Gift Codes</button></div></div></div>
   <div class="feature-grid">
    <article class="feature feature-main feature-clickable" role="link" tabindex="0" aria-label="Open Games" onclick="show('games')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();show('games')}"><span class="tag">FEATURED</span><h2>Level up your game.<br>Stay in the know.</h2><p>Discover games, claim rewards, explore guides and stay connected.</p></article>
    <div class="feature-side"><article class="feature mini-feature feature-clickable" role="link" tabindex="0" aria-label="Open Gift Codes" onclick="show('codes')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();show('codes')}"><span class="tag">REWARDS</span><h3>Gift codes & freebies</h3><p>Check the reward hub for new codes.</p></article><article class="feature mini-feature feature-clickable" role="link" tabindex="0" aria-label="Open Discord Community" onclick="window.open('https://discord.gg/qPBsJehrb','_blank','noopener')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();window.open('https://discord.gg/qPBsJehrb','_blank','noopener')}"><span class="tag">COMMUNITY</span><h3>Find your squad</h3><p>Join the conversation and connect.</p></article></div>
@@ -299,6 +318,10 @@ const shareHash=location.hash.slice(1);if(shareHash.startsWith('game=')){const p
 const backToTop=document.getElementById('backToTop');
 window.addEventListener('scroll',()=>backToTop.classList.toggle('visible',window.scrollY>280),{passive:true});
 
+
+// EU1 countdown: launch day begins at 00:00 Saudi Arabia time (UTC+3).
+function updateEU1Countdown(){const target=Date.UTC(2026,10,20,21,0,0);const remaining=target-Date.now();const title=document.getElementById('eu1CountdownTitle');const subtitle=document.getElementById('eu1CountdownSubtitle');const timer=document.getElementById('eu1Timer');if(!title||!timer)return;if(remaining<=0){title.textContent='EU1 IS LIVE!';subtitle.textContent='The new world is open. Start your adventure now!';timer.innerHTML='<div class="eu1-live">SERVER LAUNCHED · 21 NOVEMBER 2026</div>';return;}const days=Math.floor(remaining/86400000);const hours=Math.floor((remaining%86400000)/3600000);const minutes=Math.floor((remaining%3600000)/60000);const seconds=Math.floor((remaining%60000)/1000);[['eu1Days',days],['eu1Hours',hours],['eu1Minutes',minutes],['eu1Seconds',seconds]].forEach(([id,val])=>{const el=document.getElementById(id);if(el)el.textContent=String(val).padStart(2,'0');});}
+updateEU1Countdown();setInterval(updateEU1Countdown,1000);
 </script>
 </body>
 </html>
