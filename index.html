@@ -134,9 +134,9 @@ footer{border-top:1px solid #1b2030;padding:22px 30px;color:#737e94;font-size:11
  </section>
  <section class="section" id="games"><div class="panel games-panel"><div class="eyebrow">GAME LIBRARY</div><h2>Choose your battlefield</h2><p style="color:var(--muted)">Select a game to open its dedicated page and find your download link.</p>
  <div class="cards other-games-grid game-select-grid">
-  <article class="card game-select-card" role="button" tabindex="0" onclick="openGameDetail('wos')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGameDetail('wos')}" data-search="whiteout survival wos v4 v5 v6 eu1"><div class="other-art wos-art">❄️</div><div class="meta">SURVIVAL · WHITEOUT SURVIVAL</div><h3>Whiteout Survival</h3><p>Choose your server version and open its download page.</p></article>
-  <article class="card game-select-card" role="button" tabindex="0" onclick="openGameDetail('kingshot')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGameDetail('kingshot')}" data-search="kingshot strategy"><div class="other-art kingshot-art">🏰</div><div class="meta">STRATEGY · KINGSHOT</div><h3>Kingshot</h3><p>Open the Kingshot game page and download link.</p></article>
-  <article class="card game-select-card" role="button" tabindex="0" onclick="openGameDetail('wildwater')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openGameDetail('wildwater')}" data-search="wild water world adventure ocean water"><div class="other-art wild-art">🌊</div><div class="meta">ADVENTURE · WILD WATER WORLD</div><h3>Wild Water World</h3><p>Open the game page, launch the game and copy its promo code.</p></article>
+  <article class="card game-select-card" role="button" tabindex="0" data-game-key="wos" data-search="whiteout survival wos v4 v5 v6 eu1"><div class="other-art wos-art">❄️</div><div class="meta">SURVIVAL · WHITEOUT SURVIVAL</div><h3>Whiteout Survival</h3><p>Choose your server version and open its download page.</p></article>
+  <article class="card game-select-card" role="button" tabindex="0" data-game-key="kingshot" data-search="kingshot strategy"><div class="other-art kingshot-art">🏰</div><div class="meta">STRATEGY · KINGSHOT</div><h3>Kingshot</h3><p>Open the Kingshot game page and download link.</p></article>
+  <article class="card game-select-card" role="button" tabindex="0" data-game-key="wildwater" data-search="wild water world adventure ocean water"><div class="other-art wild-art">🌊</div><div class="meta">ADVENTURE · WILD WATER WORLD</div><h3>Wild Water World</h3><p>Open the game page, launch the game and copy its promo code.</p></article>
  </div></div></section>
  <section class="section" id="gameDetail"><div class="panel game-detail-panel" id="gameDetailContent"></div></section>
  <section class="section" id="updates"><div class="panel">
@@ -235,7 +235,8 @@ const gameDetailData={
  wildwater:{icon:'🌊',name:'Wild Water World',subtitle:'ADVENTURE · GAME DOWNLOAD',description:'Jump into Wild Water World. Promo code is available below.',url:'https://play.vftwiq.com/?c=6BYKCJBZ',label:'Play Wild Water World ↗',promo:'6BYKCJBZ'}
 };
 
-document.addEventListener('click',event=>{const card=event.target.closest('.game-select-card');if(!card)return;if(event.target.closest('button,a'))return;const match=card.getAttribute('onclick')?.match(/openGameDetail\('([^']+)'\)/);if(match)openGameDetail(match[1]);});
+document.addEventListener('click',event=>{const card=event.target.closest('.game-select-card[data-game-key]');if(!card||event.target.closest('button,a'))return;event.preventDefault();openGameDetail(card.dataset.gameKey);});
+document.addEventListener('keydown',event=>{const card=event.target.closest('.game-select-card[data-game-key]');if(!card||!['Enter',' '].includes(event.key))return;event.preventDefault();openGameDetail(card.dataset.gameKey);});
 function openGameDetail(key,server,updateUrl=true){
  const g=gameDetailData[key];if(!g)return;
  if(updateUrl){const slug=key==='wos'?'wos':key==='wildwater'?'wild-water-world':'kingshot';const url=getSiteBase()+'games/'+slug+(server?'/'+server.toLowerCase():'');if(location.pathname!==url||location.hash)history.pushState({game:key,server:server||null},'',url);}
